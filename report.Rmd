@@ -1,0 +1,131 @@
+---
+title: "Final Project---Alzheimer's Disease Analysis using OASIS Longitudinal Dataset"
+author: "Yuan (Anna) Chen"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(dplyr)
+library(ggplot2)
+library(knitr)
+library(corrplot)
+library(GGally)
+library(kableExtra)
+library(here)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+
+# Source table and plot generation code
+source(here("table_code.R"))
+source(here("plot_code.R"))
+```
+
+# Introduction
+
+Alzheimer’s disease (AD) is a progressive neurodegenerative disorder that affects cognitive functioning, primarily in older adults. The OASIS Longitudinal dataset contains MRI scans and cognitive assessments from individuals over time, providing valuable insights into the progression of Alzheimer’s disease, which includes 150 older adults, scanned across multiple visits, allowing for tracking changes over time. 
+
+This report will focus on analyzing the OASIS Longitudinal dataset to explore:
+
+- The relationship between age and Cognitive Dementia Rating (CDR).
+- The impact of gender on cognitive decline.
+- A correlation analysis between key variables such as age, education, MRI measures, and cognitive status.
+
+The goal of this analysis is to understand how demographic factors and MRI metrics are associated with cognitive decline, as measured by the CDR.
+
+
+
+
+# Data Preprocessing
+
+Then, we will clean the dataset by filtering out missing or irrelevant data and selecting the variables needed for the analysis.
+
+```{r data-cleaning}
+# Remove rows with missing data
+clean_data = longitudinal_data %>%
+  filter(!is.na(CDR)) %>%
+  select(Visit, Age, M.F, CDR, eTIV, nWBV, ASF, EDUC)
+
+# Rename columns for better readability
+clean_data = clean_data %>%
+  rename(Gender = M.F, Estimated_TIV = eTIV, Normalized_Brain_Volume = nWBV, Atlas_Scaling_Factor = ASF, Education_Years = EDUC)
+
+kable(head(clean_data))
+```
+
+
+
+# Summary Statistics
+
+## Descriptive Statistics of Key Variables
+
+```{r summary-table, echo=FALSE}
+# Render the summary table
+summary_table
+```
+
+The table above summarizes key demographic and cognitive variables from the OASIS Longitudinal dataset:
+
+- Age: Participants range from 60 to 98 years old, with an average age of 77 years.
+- Education_Years: Education ranges from 6 to 23 years, with an average of about 14.6 years, and most participants have completed around 15 years of education.
+- CDR (Cognitive Dementia Rating): CDR scores range from 0 to 2. The average score is 0.29, with many participants showing no cognitive impairment, but 25% have some level of cognitive decline.
+
+
+# Cognitive Decline by Age and Gender
+
+Next, we will explore how cognitive decline (measured by CDR) is associated with age and gender.
+
+```{r scatter-plot, echo=FALSE}
+# Render scatter plot
+scatter_plot
+```
+
+The scatter plot shows a general trend where CDR increases with age, indicating cognitive decline as individuals get older. The dashed line represents a linear regression line, showing the overall trend in the data. 
+
+Key observations:
+
+- The majority of participants have a CDR of 0, indicating no cognitive impairment.
+- Some participants, particularly those older than 70, have higher CDR scores, suggesting increased cognitive decline with age.
+- There appears to be no strong visible difference between males and females in terms of CDR scores.
+
+
+
+# Correlation Analysis
+
+To explore the relationships between multiple variables such as age, MRI measures, education, and CDR, we perform a correlation analysis and visualize the results using a correlation heatmap.
+
+The correlation matrix highlights the relationships between age, education, brain volume, and cognitive decline.
+
+```{r correlation-plot, echo=FALSE}
+# Render correlation matrix plot
+correlation_plot
+```
+
+The correlation heatmap provides insights into how age, education, MRI measures, and cognitive decline (CDR) are interrelated. Higher age tends to be correlated with higher CDR, while normalized brain volume (nWBV) shows a negative correlation with cognitive decline.
+
+
+
+# Pair Plot of Key Variables
+
+A pair plot is to visualize the relationships between multiple variables simultaneously, including age, education, brain volume, and CDR.
+
+```{r pair-plot, echo=FALSE}
+# Render pair plot
+pair_plot
+```
+
+Key observations:
+
+- Age is negatively correlated with normalized brain volume (nWBV), meaning older participants tend to have smaller brain volumes.
+- Brain Volume is negatively correlated with CDR, indicating that lower brain volume is associated with higher cognitive decline.
+- Education Years has a weak negative correlation with CDR, suggesting that more education may slightly protect against cognitive decline.
+
+
+
+
+
+# Conclusion
+
+In this report, we analyzed the OASIS Longitudinal dataset to explore the relationship between age, gender, and cognitive decline, as well as the correlation between MRI measures and cognitive function.
+
+Future work could involve analyzing MRI scans in more detail and building predictive models for Alzheimer’s disease progression using machine learning techniques.
+
