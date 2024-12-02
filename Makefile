@@ -1,3 +1,7 @@
+# Rule for restoring the package environment
+install:
+	Rscript -e "renv::restore()"
+
 # Rule for rendering the final report
 all: report.html
 
