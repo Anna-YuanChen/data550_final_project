@@ -33,27 +33,6 @@ This report will focus on analyzing the OASIS Longitudinal dataset to explore:
 The goal of this analysis is to understand how demographic factors and MRI metrics are associated with cognitive decline, as measured by the CDR.
 
 
-
-
-# Data Preprocessing
-
-Then, we will clean the dataset by filtering out missing or irrelevant data and selecting the variables needed for the analysis.
-
-```{r data-cleaning}
-# Remove rows with missing data
-clean_data = longitudinal_data %>%
-  filter(!is.na(CDR)) %>%
-  select(Visit, Age, M.F, CDR, eTIV, nWBV, ASF, EDUC)
-
-# Rename columns for better readability
-clean_data = clean_data %>%
-  rename(Gender = M.F, Estimated_TIV = eTIV, Normalized_Brain_Volume = nWBV, Atlas_Scaling_Factor = ASF, Education_Years = EDUC)
-
-kable(head(clean_data))
-```
-
-
-
 # Summary Statistics
 
 ## Descriptive Statistics of Key Variables
@@ -93,11 +72,10 @@ Key observations:
 
 To explore the relationships between multiple variables such as age, MRI measures, education, and CDR, we perform a correlation analysis and visualize the results using a correlation heatmap.
 
-The correlation matrix highlights the relationships between age, education, brain volume, and cognitive decline.
 
 ```{r correlation-plot, echo=FALSE}
 # Render correlation matrix plot
-correlation_plot
+correlation_plot()
 ```
 
 The correlation heatmap provides insights into how age, education, MRI measures, and cognitive decline (CDR) are interrelated. Higher age tends to be correlated with higher CDR, while normalized brain volume (nWBV) shows a negative correlation with cognitive decline.

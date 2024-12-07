@@ -18,11 +18,10 @@ scatter_plot <- ggplot(clean_data, aes(x = Age, y = CDR, color = Gender)) +
   theme_minimal()
 
 # Plot 2: Correlation matrix
-cor_matrix <- cor(clean_data[, c("Age", "Education", "BrainVolume", "CDR")], use = "complete.obs")
 correlation_plot <- function() {
-  corrplot(cor_matrix, method = "circle", type = "lower", 
+  corrplot(cor(clean_data[, c("Age", "Education_Years", "Estimated_TIV", "Normalized_Brain_Volume", "Atlas_Scaling_Factor", "CDR")], use = "complete.obs"), method = "circle", type = "lower", 
            tl.cex = 0.8, title = "Correlation Matrix", mar = c(0, 0, 1, 0))
 }
 
 # Plot 3: Pair plot
-pair_plot <- ggpairs(clean_data[, c("Age", "Education", "BrainVolume", "CDR")])
+pair_plot <- ggpairs(clean_data[, c("Age", "Education_Years", "Estimated_TIV", "Normalized_Brain_Volume", "Atlas_Scaling_Factor", "CDR")])

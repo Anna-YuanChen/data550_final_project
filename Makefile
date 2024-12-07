@@ -1,9 +1,24 @@
+
+# Build the Docker image
+docker-build:
+	docker build -t data550-final-project .
+
+# Run the Docker container and generate the report
+docker-run:
+	docker run --rm -v /Users/annachen/Desktop/semester\ 3/data\ 550/data550\ final\ project/report:/usr/src/app/report data550-final-project
+
+
+
 # Rule for restoring the package environment
 install:
 	Rscript -e "renv::restore()"
 
 # Rule for rendering the final report
 all: report.html
+
+# Rule to render the RMarkdown file into an HTML report
+report/report.html: report.Rmd
+	Rscript -e "rmarkdown::render('report.Rmd', output_file = 'report/report.html')"
 
 # Rule for generating the final report from the RMarkdown file
 report.html: report.Rmd summary_table.csv scatter_plot.png correlation_plot.png pair_plot.png
