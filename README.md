@@ -41,8 +41,8 @@ The Docker image for this project is available on DockerHub:
 To build the Docker image, navigate to the project directory and run the following command in your terminal:
 
 ```bash
-
 docker build -t data550-final-project .
+```
 
 This will create a Docker image named data550-final-project.
 
@@ -53,8 +53,8 @@ This will create a Docker image named data550-final-project.
 To generate the report, run the Docker container using the following command:
 
 ```bash
-
 make docker-run
+```
 
 This command:
 
@@ -72,43 +72,38 @@ The Makefile automates common tasks. Below are the targets included:
 ### 1. Build the Docker image:
 
 ```bash
-
 make docker-build
-
+```
 
 ### 2. Run the Docker container to generate the report:
 
 ```bash
-
 make docker-run
-
+```
 
 ### 3. Generate the Report Locally:
 
 If you prefer to generate the report without Docker, use:
 
 ```bash
-
 make all
-
+```
 
 ### 4. Clean up all generated files:
 
 To remove all generated files:
 
 ```bash
-
 make clean
-
+```
 
 ### Notes for Windows Users
 
 If you are using Windows with Git Bash, remember to add an extra / before file paths when mounting directories. For example:
 
 ```bash
-
 docker run --rm -v //c/Users/YourName/project/report:/usr/src/app/report data550-final-project
-
+```
 
 ### Additional Notes
 
@@ -119,9 +114,8 @@ docker run --rm -v //c/Users/YourName/project/report:/usr/src/app/report data550
 - For debugging, you can inspect the container logs using:
 
 ```bash
-
 docker logs <container-id>
-
+```
 
 
 ## Instructions for Reproducibility
@@ -140,7 +134,6 @@ This ensures that all the required packages and their versions are synchronized 
 3. Run the following command in the terminal:
 
    ```bash
-   
    make all
 
 This will execute the Makefile and generate the final report report.html.
